@@ -1,6 +1,6 @@
 {
   "name": "react-native-disable-enable-screenshots",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "description": "Enable Disable Screenshots",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
@@ -48,7 +48,7 @@
   "bugs": {
     "url": "https://github.com/roopaliv8/DisableScreenShots/react-native-disable-enable-screenshots/issues"
   },
-  "homepage": "https://github.com/roopaliv8/DisableScreenShots/react-native-disable-enable-screenshots#readme",
+  "homepage": "https://github.com/roopaliv8/DisableScreenShot/#readme",
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
   },
