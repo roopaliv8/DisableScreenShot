@@ -1,6 +1,6 @@
 # react-native-disable-enable-screenshots
 
-Enable Disable Screenshots
+React native plugin to enable/disable screenshot for Android and iOS.
 
 ## Installation
 
@@ -16,7 +16,9 @@ import { screenshotsStatusUpdate } from 'react-native-disable-enable-screenshots
 // ...
 
 const res = await screenshotsStatusUpdate(true/false);
+
 // String value as response eg. "Done. Screenshot Disabled." or "Done. Screenshot Enabled."
+
 ```
 
 ## Contributing
