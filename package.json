@@ -1,6 +1,6 @@
 {
   "name": "react-native-disable-enable-screenshots",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Enable Disable Screenshots",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
