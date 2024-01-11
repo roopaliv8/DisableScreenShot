@@ -11,11 +11,11 @@ npm install react-native-disable-enable-screenshots
 ## Usage
 
 ```js
-import { multiply } from 'react-native-disable-enable-screenshots';
+import { screenshotsStatusUpdate } from 'react-native-disable-enable-screenshots';
 
 // ...
 
-const result = await multiply(3, 7);
+const res = await screenshotsStatusUpdate(isEnable);
 ```
 
 ## Contributing
