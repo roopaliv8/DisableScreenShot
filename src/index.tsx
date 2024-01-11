@@ -20,3 +20,9 @@ const DisableScreenShot = NativeModules.DisableScreenShot
 export function multiply(a: number, b: number): Promise<number> {
   return DisableScreenShot.multiply(a, b);
 }
+
+export function screenshotsStatusUpdate(
+  disableScreenshot: boolean
+): Promise<string> {
+  return DisableScreenShot.screenshotsStatusUpdate(disableScreenshot);
+}

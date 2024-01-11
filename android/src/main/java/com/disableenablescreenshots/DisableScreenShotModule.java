@@ -29,4 +29,48 @@ public class DisableScreenShotModule extends ReactContextBaseJavaModule {
   public void multiply(double a, double b, Promise promise) {
     promise.resolve(a * b);
   }
+
+  @ReactMethod
+  public void screenshotsStatusUpdate(boolean disableScreenshot, Promise promise) {
+
+    try {
+      Activity activity = getCurrentActivity();
+      if (activity != null) {
+        if (disableScreenshot) {
+          activity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+              try {
+                activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_SECURE);
+                promise.resolve("Done. Screenshot Disabled.");
+              } catch (Exception e) {
+                promise.reject(NAME, "Disable screenshot failed.");
+              }
+
+
+            }
+          });
+        } else {
+          activity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+              try {
+                activity.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_SECURE);
+                promise.resolve("Done. Screenshot Enabled.");
+              } catch (Exception e) {
+                promise.reject(NAME, "Enable screenshot fialed.");
+              }
+
+            }
+          });
+        }
+
+      }
+
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+
+
+  }
 }
