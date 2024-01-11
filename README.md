@@ -15,7 +15,7 @@ import { screenshotsStatusUpdate } from 'react-native-disable-enable-screenshots
 
 // ...
 
-const res = await screenshotsStatusUpdate(isEnable);
+const res = await screenshotsStatusUpdate(true/false);
 ```
 
 ## Contributing
