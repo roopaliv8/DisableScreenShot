@@ -15,7 +15,7 @@ import { screenshotsStatusUpdate } from 'react-native-disable-enable-screenshots
 
 // ...
 
-const res = await screenshotsStatusUpdate(true/false);
+const res = await screenshotsStatusUpdate(true/false); // String value as response eg. "Done. Screenshot Disabled."/"Done. Screenshot Enabled."
 ```
 
 ## Contributing
