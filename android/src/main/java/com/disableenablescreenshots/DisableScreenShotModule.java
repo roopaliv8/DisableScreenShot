@@ -60,7 +60,7 @@ public class DisableScreenShotModule extends ReactContextBaseJavaModule {
                 activity.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_SECURE);
                 promise.resolve("Done. Screenshot Enabled.");
               } catch (Exception e) {
-                promise.reject(NAME, "Enable screenshot fialed.");
+                promise.reject(NAME, "Enable screenshot failed.");
               }
 
             }

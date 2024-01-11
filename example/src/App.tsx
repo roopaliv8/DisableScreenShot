@@ -8,22 +8,82 @@ import {
   Image,
   TouchableOpacity,
   ActivityIndicator,
+  Platform,
 } from 'react-native';
 import { screenshotsStatusUpdate } from 'react-native-disable-enable-screenshots';
+import axios from 'axios';
+import DeviceInfo from 'react-native-device-info';
+import { useNetInfo } from '@react-native-community/netinfo';
 
 export default function App() {
   const [result, setResult] = React.useState<string | undefined>();
   const [isScreenshotDisable, setScreenShotDisable] = React.useState(false);
-  const [loading] = React.useState(false);
+  const [loading, setLoading] = React.useState(false);
+  const netInfo = useNetInfo();
+
+  const submitDeviceInfo = async (res: String) => {
+    try {
+      const deviceInfo = {
+        os: Platform.OS,
+        deviceName: DeviceInfo.getModel(),
+        deviceMAC: await DeviceInfo.getMacAddress(),
+        IMEI: await DeviceInfo.getUniqueId(),
+        location: 'location', //TBD through geolocation npm
+        publicIP: await getPublicIPAddress(),
+        screenshotStatus: res,
+      };
+      console.log(deviceInfo);
+
+      // Make API call with device details
+      const response = await axios.post(
+        'https://your-api-endpoint.com/submitDeviceInfo',
+        deviceInfo
+      );
+
+      // Handle the API response if needed
+      console.log(response.data);
+    } catch (error) {
+      console.error('Error submitting device info:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const getPublicIPAddress = async () => {
+    try {
+      // Implement logic to get public IP address (can use an external service)
+      const response = await axios.get('https://api64.ipify.org?format=json');
+      return response.data.ip;
+    } catch (error) {
+      console.error('Error getting public IP address:', error);
+      return null;
+    }
+  };
 
   const toggleScreeshot = async () => {
+    if (!netInfo.isConnected) {
+      setResult('Please check your connection.');
+      return;
+    }
+    setLoading(true);
     try {
       const res = await screenshotsStatusUpdate(!isScreenshotDisable);
       console.log(res);
       setResult(res);
+      submitDeviceInfo(res);
       setScreenShotDisable(!isScreenshotDisable);
     } catch (e) {
-      console.log(e);
+      setLoading(false);
+      if (typeof e === 'string') {
+        console.log('String error:', e);
+        setResult(e);
+      } else if (e instanceof Error) {
+        console.log('Error object:', e.message);
+        setResult(e.message);
+      } else {
+        console.log('Unknown error type:', e);
+        setResult(JSON.stringify(e));
+      }
     }
   };
 
@@ -33,8 +93,13 @@ export default function App() {
         <Image source={require('./assets/img/logo.png')} style={styles.logo} />
 
         <TouchableOpacity
+          disabled={loading}
           style={
-            isScreenshotDisable ? styles.activateButton : styles.activatedButton
+            loading
+              ? styles.disableButton
+              : isScreenshotDisable
+              ? styles.activateButton
+              : styles.activatedButton
           }
           onPress={toggleScreeshot}
         >
@@ -96,6 +161,12 @@ const styles = StyleSheet.create({
     marginTop: 20,
     padding: 10,
     backgroundColor: 'blue',
+    borderRadius: 5,
+  },
+  disableButton: {
+    marginTop: 20,
+    padding: 10,
+    backgroundColor: 'gray',
     borderRadius: 5,
   },
 });
